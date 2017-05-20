@@ -149,4 +149,32 @@ public class LinqListTest
         Assert.assertEquals(true, linqList.contains(2, comparator));
         Assert.assertEquals(false, linqList.contains(10, comparator));
     }
+
+    @Test
+    public void unionTest()
+    {
+        LOGGER.info("Running union test");
+        LinqList<Integer> linqList = new LinqList<Integer>();
+        linqList.add(0);
+        linqList.add(1);
+        linqList.add(2);
+        linqList.add(3);
+
+        LinqList<Integer> linqList2 = new LinqList<Integer>();
+        linqList2.add(0);
+        linqList2.add(1);
+        linqList2.add(2);
+        linqList2.add(3);
+
+        LinqList<Integer> union = linqList.union(linqList2);
+        LOGGER.debug(union.toString());
+
+        Assert.assertEquals(linqList.size(), union.size());
+
+        linqList2.add(5);
+        union = linqList.union(linqList2);
+
+        Assert.assertEquals(5, union.size());
+        LOGGER.debug(union.toString());
+    }
 }
