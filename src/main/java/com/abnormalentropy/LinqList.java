@@ -1,10 +1,10 @@
 package com.abnormalentropy;
 
 import com.abnormalentropy.exceptions.EmptyListException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
+import java.util.*;
 import java.util.function.*;
 
 /**
@@ -12,6 +12,8 @@ import java.util.function.*;
  */
 public class LinqList<T> extends ArrayList<T>
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LinqList.class);
+
     LinqList()
     {
         super();
@@ -140,5 +142,41 @@ public class LinqList<T> extends ArrayList<T>
     T lastOrDefault(Function<T, Boolean> function)
     {
         return this.where(function).lastOrDefault();
+    }
+
+    List<T> toList()
+    {
+        return new ArrayList<T>(this);
+    }
+
+    <K> HashMap<K, T> toHashMap(Function<T, K> function)
+    {
+        HashMap<K, T> hashMap = new HashMap<K, T>();
+
+        this.forEach(x -> hashMap.put(function.apply(x), x));
+
+        return hashMap;
+    }
+
+    LinqList<T> union(List<T> list)
+    {
+        LinqList<T> union = new LinqList<T>(this);
+
+        for (T x : list)
+            if (!union.contains(x))
+                union.add(x);
+
+        return union;
+    }
+
+    LinqList<T> union(List<T> list, Comparator<T> comparator)
+    {
+        LinqList<T> union = new LinqList<T>(this);
+
+        for (T x : list)
+            if (!union.contains(x, comparator))
+                union.add(x);
+
+        return union;
     }
 }
