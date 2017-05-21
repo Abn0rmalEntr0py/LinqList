@@ -1,6 +1,7 @@
 package com.abnormalentropy;
 
 import com.abnormalentropy.exceptions.EmptyListException;
+import com.abnormalentropy.exceptions.NoSingleElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,4 +191,38 @@ public class LinqList<T> extends ArrayList<T>
 
         return linqList;
     }
+
+    LinqList<T> take(int size)
+    {
+        return new LinqList<T>(this.subList(0, size));
+    }
+
+    LinqList<T> skip(int from)
+    {
+        return new LinqList<T>(this.subList(from, this.size()));
+    }
+
+    T single() throws NoSingleElementException
+    {
+        if (this.size() > 1)
+            throw new NoSingleElementException();
+
+        return this.get(0);
+    }
+
+    T single(Function<T, Boolean> function) throws NoSingleElementException
+    {
+        return this.where(function).single();
+    }
+
+    T singleOrDefault()
+    {
+        return (this.size() > 1) ? null : this.get(0);
+    }
+
+    T singleOrDefault(Function<T, Boolean> function)
+    {
+        return this.where(function).singleOrDefault();
+    }
+
 }
