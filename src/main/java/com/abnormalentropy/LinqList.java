@@ -179,4 +179,15 @@ public class LinqList<T> extends ArrayList<T>
 
         return union;
     }
+
+    <U, R> LinqList<R> zip(List<U> list, BiFunction<T, U, R> function)
+    {
+        LinqList<R> linqList = new LinqList<R>();
+
+        int end = Math.min(this.size(), list.size());
+        for (int k = 0; k < end; k++)
+            linqList.add(function.apply(this.get(k), list.get(k)));
+
+        return linqList;
+    }
 }
