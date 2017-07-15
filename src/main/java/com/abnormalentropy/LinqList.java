@@ -225,4 +225,11 @@ public class LinqList<T> extends ArrayList<T>
         return this.where(function).singleOrDefault();
     }
 
+    LinqList<T> concat(LinqList<T> list)
+    {
+        LinqList<T> returnList = new LinqList<T>(list);
+        list.forEach(x -> returnList.add(x));
+
+        return returnList;
+    }
 }
