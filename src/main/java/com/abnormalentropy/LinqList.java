@@ -232,4 +232,9 @@ public class LinqList<T> extends ArrayList<T>
 
         return returnList;
     }
+
+    int count(Function<T, Boolean> function)
+    {
+        return this.where(function).size();
+    }
 }
