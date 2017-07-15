@@ -203,4 +203,17 @@ public class LinqListTest
         LOGGER.debug(concat.toString());
 
     }
+
+    @Test
+    public void countTest()
+    {
+        LOGGER.info("Running count test");
+        LinqList<Integer> linqList = new LinqList<Integer>();
+        linqList.add(0);
+        linqList.add(1);
+        linqList.add(2);
+        linqList.add(3);
+
+        Assert.assertEquals(2, linqList.count(x -> x >= 2));
+    }
 }
