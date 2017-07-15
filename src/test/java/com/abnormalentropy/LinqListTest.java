@@ -216,4 +216,21 @@ public class LinqListTest
 
         Assert.assertEquals(2, linqList.count(x -> x >= 2));
     }
+
+    @Test
+    public void distinctTest()
+    {
+        LOGGER.info("Running distinct test");
+        LinqList<Integer> linqList = new LinqList<Integer>();
+        linqList.add(0);
+        linqList.add(1);
+        linqList.add(2);
+        linqList.add(2);
+
+        linqList = linqList.distinct();
+
+        Assert.assertEquals(3, linqList.size());
+
+        LOGGER.debug(linqList.toString());
+    }
 }
