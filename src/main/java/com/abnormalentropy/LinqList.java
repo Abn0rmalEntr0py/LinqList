@@ -237,4 +237,26 @@ public class LinqList<T> extends ArrayList<T>
     {
         return this.where(function).size();
     }
+
+    LinqList<T> distinct()
+    {
+        LinqList<T> ret = new LinqList<T>();
+        this.forEach(x -> {
+            if (!ret.contains(x))
+                ret.add(x);
+        });
+
+        return ret;
+    }
+
+    LinqList<T> distinct(Comparator<T> comparator)
+    {
+        LinqList<T> ret = new LinqList<T>();
+        this.forEach(x -> {
+            if (!ret.contains(x, comparator))
+                ret.add(x);
+        });
+
+        return ret;
+    }
 }
