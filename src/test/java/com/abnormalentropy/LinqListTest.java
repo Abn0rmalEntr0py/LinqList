@@ -177,4 +177,30 @@ public class LinqListTest
         Assert.assertEquals(5, union.size());
         LOGGER.debug(union.toString());
     }
+
+    @Test
+    public void concatTest()
+    {
+        LOGGER.info("Running concat test");
+        LinqList<Integer> linqList = new LinqList<Integer>();
+        linqList.add(0);
+        linqList.add(1);
+        linqList.add(2);
+        linqList.add(3);
+
+        LinqList<Integer> linqList2 = new LinqList<Integer>();
+        linqList2.add(0);
+        linqList2.add(1);
+        linqList2.add(2);
+        linqList2.add(3);
+
+        LinqList<Integer> concat = linqList.concat(linqList2);
+
+        Assert.assertEquals(linqList.size() + linqList2.size(), concat.size());
+
+        LOGGER.debug(linqList.toString());
+        LOGGER.debug(linqList2.toString());
+        LOGGER.debug(concat.toString());
+
+    }
 }
