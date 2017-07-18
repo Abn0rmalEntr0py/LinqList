@@ -259,4 +259,18 @@ public class LinqList<T> extends ArrayList<T>
 
         return ret;
     }
+
+    Double sum(Function<T, Double> function)
+    {
+        double sum = 0;
+        for (T x : this)
+            sum += function.apply(x);
+
+        return sum;
+    }
+
+    Double average(Function<T, Double> function)
+    {
+        return this.sum(function) / (double)this.size();
+    }
 }
