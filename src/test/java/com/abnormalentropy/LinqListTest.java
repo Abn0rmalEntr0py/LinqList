@@ -233,4 +233,37 @@ public class LinqListTest
 
         LOGGER.debug(linqList.toString());
     }
+
+    @Test
+    public void doubleSumTest()
+    {
+        LOGGER.info("Running double sum test");
+        LinqList<Integer> linqList = new LinqList<Integer>();
+        linqList.add(0);
+        linqList.add(1);
+        linqList.add(2);
+        linqList.add(3);
+
+        double sum = linqList.sum(x -> (double) x);
+
+        Assert.assertEquals(6.0, sum, 0.0);
+
+        LOGGER.debug(String.valueOf(sum));
+    }
+
+    @Test
+    public void doubleAverageTest()
+    {
+        LOGGER.info("Running double average test");
+        LinqList<Integer> linqList = new LinqList<Integer>();
+        linqList.add(1);
+        linqList.add(2);
+        linqList.add(3);
+
+        double average = linqList.average(x -> (double) x);
+
+        Assert.assertEquals(2.0, average, 0.0);
+
+        LOGGER.debug(String.valueOf(average));
+    }
 }
