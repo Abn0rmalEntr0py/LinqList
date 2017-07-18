@@ -271,6 +271,9 @@ public class LinqList<T> extends ArrayList<T>
 
     Double average(Function<T, Double> function)
     {
+        if (this.size() == 0)
+            return 0.0;
+
         return this.sum(function) / (double)this.size();
     }
 }
