@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by rohan on 2017/05/14.
@@ -14,6 +15,15 @@ import java.util.Comparator;
 public class LinqListTest
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(LinqListTest.class);
+
+    private List<Integer> buildIntegerList(int n)
+    {
+        LinqList<Integer> list = new LinqList<>();
+        for (int k = 1; k <= n; k++)
+            list.add(k);
+
+        return list;
+    }
 
     @Test
     public void constructionTest()
@@ -23,9 +33,7 @@ public class LinqListTest
 
         Assert.assertEquals(0, linqList.size());
 
-        linqList.add(2);
-        linqList.add(3);
-        linqList.add(4);
+        linqList = (LinqList<Integer>) buildIntegerList(3);
         Assert.assertEquals(3, linqList.size());
 
         linqList.remove(0);
@@ -36,11 +44,7 @@ public class LinqListTest
     public void listConstructionTest()
     {
         LOGGER.info("Running list construction test");
-        ArrayList<Integer> arrayList = new ArrayList<Integer>();
-
-        arrayList.add(0);
-        arrayList.add(1);
-        arrayList.add(2);
+        ArrayList<Integer> arrayList = (ArrayList<Integer>) buildIntegerList(3);
 
         LinqList<Integer> linqList = new LinqList<Integer>();
         linqList.addAll(arrayList);
@@ -52,17 +56,13 @@ public class LinqListTest
     public void whereGreaterThanTest()
     {
         LOGGER.info("Running where lambda (greater than) test");
-        LinqList<Integer> linqList = new LinqList<Integer>();
-        linqList.add(0);
-        linqList.add(1);
-        linqList.add(2);
-        linqList.add(3);
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
 
         LinqList<Integer> newList = linqList.where(x -> x >= 2);
 
         LOGGER.debug(newList.toString());
 
-        Assert.assertEquals(2, newList.size());
+        Assert.assertEquals(3, newList.size());
         Assert.assertEquals(2, newList.get(0).intValue());
         Assert.assertEquals(3, newList.get(1).intValue());
     }
@@ -124,7 +124,7 @@ public class LinqListTest
     public void allTest()
     {
         LOGGER.info("Running 'all' method test");
-        LinqList<Integer> linqList = new LinqList<Integer>();
+        LinqList<Integer> linqList = new LinqList<>();
         linqList.add(0);
         linqList.add(1);
         linqList.add(2);
@@ -235,34 +235,104 @@ public class LinqListTest
     }
 
     @Test
+    public void floatSumTest()
+    {
+        LOGGER.info("Running float sum test");
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
+
+        float sum = linqList.sumFloat(x -> (float) x);
+
+        Assert.assertEquals(10f, sum, 0.0);
+
+        LOGGER.debug(String.valueOf(sum));
+    }
+
+    @Test
     public void doubleSumTest()
     {
         LOGGER.info("Running double sum test");
-        LinqList<Integer> linqList = new LinqList<Integer>();
-        linqList.add(0);
-        linqList.add(1);
-        linqList.add(2);
-        linqList.add(3);
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
 
-        double sum = linqList.sum(x -> (double) x);
+        double sum = linqList.sumDouble(x -> (double) x);
 
-        Assert.assertEquals(6.0, sum, 0.0);
+        Assert.assertEquals(10d, sum, 0.0);
 
         LOGGER.debug(String.valueOf(sum));
+    }
+
+    @Test
+    public void intSumTest()
+    {
+        LOGGER.info("Running integer sum test");
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
+
+        int sum = linqList.sumInt(x -> x);
+
+        Assert.assertEquals(10, sum, 0.0);
+
+        LOGGER.debug(String.valueOf(sum));
+    }
+
+    @Test
+    public void longSumTest()
+    {
+        LOGGER.info("Running long sum test");
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
+
+        long sum = linqList.sumLong(x -> (long) x);
+
+        Assert.assertEquals(10L, sum, 0.0);
+
+        LOGGER.debug(String.valueOf(sum));
+    }
+
+    @Test
+    public void floatAverageTest()
+    {
+        LOGGER.info("Running float averagetest");
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
+
+        float average = linqList.averageFloat(x -> (float) x);
+
+        Assert.assertEquals(10f / 4f, average, 0.0);
+
+        LOGGER.debug(String.valueOf(average));
     }
 
     @Test
     public void doubleAverageTest()
     {
         LOGGER.info("Running double average test");
-        LinqList<Integer> linqList = new LinqList<Integer>();
-        linqList.add(1);
-        linqList.add(2);
-        linqList.add(3);
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
 
-        double average = linqList.average(x -> (double) x);
+        double average = linqList.averageDouble(x -> (double) x);
 
-        Assert.assertEquals(2.0, average, 0.0);
+        Assert.assertEquals(10d / 4d, average, 0.0);
+
+        LOGGER.debug(String.valueOf(average));
+    }
+
+    @Test
+    public void intAverageTest()
+    {
+        LOGGER.info("Running integer average test");
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
+
+        int average = linqList.averageInt(x -> x);
+
+        Assert.assertEquals(10 / 4, average, 0.0);
+
+        LOGGER.debug(String.valueOf(average));
+    }
+
+    public void longAverageTest()
+    {
+        LOGGER.info("Running long average test");
+        LinqList<Integer> linqList = (LinqList<Integer>) buildIntegerList(4);
+
+        long average = linqList.averageLong(x -> (long) x);
+
+        Assert.assertEquals(10 / 4, average, 0.0);
 
         LOGGER.debug(String.valueOf(average));
     }
