@@ -20,7 +20,7 @@ public class LinqList<T> extends ArrayList<T>
         super();
     }
 
-    LinqList(Collection<T> collection)
+    public LinqList(Collection<T> collection)
     {
         super(collection);
     }
@@ -260,7 +260,16 @@ public class LinqList<T> extends ArrayList<T>
         return ret;
     }
 
-    Double sum(Function<T, Double> function)
+    Float sumFloat(Function<T, Float> function)
+    {
+        float sum = 0;
+        for (T x : this)
+            sum += function.apply(x);
+
+        return sum;
+    }
+
+    Double sumDouble(Function<T, Double> function)
     {
         double sum = 0;
         for (T x : this)
@@ -269,11 +278,53 @@ public class LinqList<T> extends ArrayList<T>
         return sum;
     }
 
-    Double average(Function<T, Double> function)
+    Integer sumInt(Function<T, Integer> function)
+    {
+        int sum = 0;
+        for (T x : this)
+            sum += function.apply(x);
+
+        return sum;
+    }
+
+    Long sumLong(Function<T, Long> function)
+    {
+        long sum = 0;
+        for (T x : this)
+            sum += function.apply(x);
+
+        return sum;
+    }
+
+    Float averageFloat(Function<T, Float> function)
     {
         if (this.size() == 0)
-            return 0.0;
+            return 0f;
 
-        return this.sum(function) / (double)this.size();
+        return this.sumFloat(function) / (float)this.size();
+    }
+
+    Double averageDouble(Function<T, Double> function)
+    {
+        if (this.size() == 0)
+            return 0d;
+
+        return this.sumDouble(function) / (double)this.size();
+    }
+
+    Integer averageInt(Function<T, Integer> function)
+    {
+        if (this.size() == 0)
+            return 0;
+
+        return this.sumInt(function) / this.size();
+    }
+
+    Long averageLong(Function<T, Long> function)
+    {
+        if (this.size() == 0)
+            return 0L;
+
+        return this.sumLong(function) / this.size();
     }
 }
